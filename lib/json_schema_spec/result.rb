@@ -1,10 +1,10 @@
 module JsonSchemaSpec
-	class Result
-		attr_accessor :contexts, :errors
+  class Result
+    attr_accessor :contexts, :errors
 
-		def initialize
-			@contexts = []
-			@errors   = []
-		end
-	end
+    def initialize
+      @contexts = []
+      @errors   = []
+    end
+  end
 end
