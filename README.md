@@ -106,7 +106,7 @@ suite = JsonSchemaSpec.parse!("schema/suite/sample.json")
 
 result = JsonSchemaSpec.result!(schema, suite)
 
-p schemaSpec.ok?(schema, suite)
+p JsonSchemaSpec.ok?(schema, suite)
 # false
 
 p result
