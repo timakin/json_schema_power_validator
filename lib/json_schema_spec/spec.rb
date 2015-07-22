@@ -27,7 +27,7 @@ module JsonSchemaSpec
       suites["examples"].each do |suite|
         validation_response = schema.validate!(suite)
         results.contexts.push(validation_response)
-        if validation_response == "error"
+        if validation_response == "error" # TODO
           results.errors.push(validation_response)
         end
       end
