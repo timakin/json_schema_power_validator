@@ -10,7 +10,7 @@ module JsonSchemaSpec
 
     def result
       compared_result = compare_suite_and_schema(@schema, @suite)
-      compared_results.errors.empty? ? "Success" : error_object # TODO: wanna get .errors like this
+      compared_results.errors.empty? ? "Success" : compared_results.errors # TODO: return error json
     end
 
     def is_valid
