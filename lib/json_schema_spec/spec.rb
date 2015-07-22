@@ -9,21 +9,19 @@ module JsonSchemaSpec
     end
 
     def result
-      # at first, validate with json_schema
-      # just return json_schema result (whether it failed or not)
       compared_result = compare_suite_and_schema(@schema, @suite)
-      compared_results.errors.empty? ? "Success" : error_object # wanna get .errors like this
+      compared_results.errors.empty? ? "Success" : error_object # TODO: wanna get .errors like this
     end
 
     def is_valid
       compared_result = compare_suite_and_schema(@schema, @suite)
-      compared_results.errors.empty? ? true : false # wanna get .errors like this
+      compared_results.errors.empty? ? true : false
     end
 
     private
 
     def compare_suite_and_schema(schema, suites)
-      results = Result.new # if it return error_object, this shouldn't be Array.
+      results = Result.new
       suites["examples"].each do |suite|
         validation_response = schema.validate!(suite)
         results.contexts.push(validation_response)

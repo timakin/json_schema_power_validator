@@ -13,8 +13,6 @@ module JsonSchemaSpec
   # 4. ok? will just return true/false depending on results
 
 
-  # this file define the log interface of this module
-  # definition of substantial content of methods are written in each classes.
   def self.parse!(file)
     Parser.new(file).parse
   end
