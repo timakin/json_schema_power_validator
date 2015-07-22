@@ -24,7 +24,7 @@ module JsonSchemaSpec
 
     def compare_suite_and_schema(schema, suites)
       results = Result.new # if it return error_object, this shouldn't be Array.
-      suites.examples.each do |suite|
+      suites["examples"].each do |suite|
         validation_response = schema.validate!(suite)
         results.contexts.push(validation_response)
         if validation_response == "error"
