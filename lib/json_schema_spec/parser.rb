@@ -1,3 +1,5 @@
+require 'json_schema'
+
 module JsonSchemaSpec
   class Parser
     def initialize(file)
