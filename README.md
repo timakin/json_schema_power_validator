@@ -99,18 +99,18 @@ Or install it yourself as:
 ```
 
 ```ruby
-require 'json'
 require 'json_schema_spec'
 
-schema = JSON.parse(File.read("schema/sample.json"))
-suite = JSON.parse(File.read("schema/suite/sample.json"))
+schema = JsonSchemaSpec.parse_schema!("schema/sample.json")
+suite = JsonSchemaSpec.parse!("schema/suite/sample.json")
 
-schemaSpec = JsonSchemaSpec.new(schema, suite)
-result = schemaSpec.get_result
+result = JsonSchemaSpec.result!(schema, suite)
 
-p schemaSpec.ok?
+p schemaSpec.ok?(schema, suite)
 # false
+
 p result
+# なんかちょっと違う
 #{
 #	"results": [
 #		{
