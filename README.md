@@ -53,9 +53,6 @@ Or install it yourself as:
 ```json
 {
 	"id": "https://github.com/timakin/json_schema_spec/schema/suite/sample.json",
-	"$schema": {
-		"$ref": "https://github.com/timakin/json_schema_spec/schema/sample.json"
-	},
 	"description": "Schema Spec for example.json",
 	"examples": [
 		{

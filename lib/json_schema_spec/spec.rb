@@ -31,5 +31,9 @@ module JsonSchemaSpec
       end
       results
     end
+
+    def trim_result_json
+      # before return result, trim compared_result as JSON data
+    end
   end
 end
