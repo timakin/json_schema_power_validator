@@ -30,7 +30,7 @@ module JsonSchema
         end
       end
 
-      trim_result_json(@results)
+      self.trim_result_json(@results)
       @results.errors.empty? ? "Success" : compared_results.errors # TODO: return error json
     end
 
