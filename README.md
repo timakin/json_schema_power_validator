@@ -1,6 +1,6 @@
-# JsonSchemaSpec
+# JsonSchemaPowerValidator
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/json_schema_spec`. To experiment with that code, run `bin/console` for an interactive prompt.
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/json_schema_power_validator`. To experiment with that code, run `bin/console` for an interactive prompt.
 
 TODO: Delete this and the text above, and describe your gem
 
@@ -9,7 +9,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'json_schema_spec'
+gem 'json_schema_power_validator'
 ```
 
 And then execute:
@@ -18,13 +18,13 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install json_schema_spec
+    $ gem install json_schema_power_validator
 
 ## Usage
 
 ```json
 {
-	"id": "https://github.com/timakin/json_schema_spec/schema/sample.json",
+	"id": "https://github.com/timakin/json_schema_power_validator/schema/sample.json",
 	"$schema": "http://json-schema.org/draft-04/schema#",
 	"description": "Test schema for example",
 	"definitions": {
@@ -52,8 +52,8 @@ Or install it yourself as:
 
 ```json
 {
-	"id": "https://github.com/timakin/json_schema_spec/schema/suite/sample.json",
-	"description": "Schema Spec for example.json",
+	"id": "https://github.com/timakin/json_schema_power_validator/schema/suite/sample.json",
+	"description": "Schema PowerValidator for example.json",
 	"examples": [
 		{
 			"context": "Success",
@@ -96,18 +96,11 @@ Or install it yourself as:
 ```
 
 ```ruby
-require 'json_schema_spec'
+require 'json_schema_power_validator'
 
-schema = JsonSchemaSpec.parse_schema!("schema/sample.json")
-suite = JsonSchemaSpec.parse!("schema/suite/sample.json")
-
-result = JsonSchemaSpec.result!(schema, suite)
-
-p JsonSchemaSpec.ok?(schema, suite)
-# false
-
-p result
-# なんかちょっと違う
+schema = JsonSchema::PowerValidator.new("schema/sample.json")
+schema.set_suite("schema/suite/sample.json")
+schema.get_result
 #{
 #	"results": [
 #		{
@@ -132,6 +125,10 @@ p result
 #		}
 #	]
 #}
+
+
+schema.ok?
+# false
 ```
 
 ## Development
@@ -142,7 +139,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/json_schema_spec/fork )
+1. Fork it ( https://github.com/[my-github-username]/json_schema_power_validator/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

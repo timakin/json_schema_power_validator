@@ -1,3 +1,3 @@
-module JsonSchemaSpec
+module JsonSchema
   VERSION = "0.1.0"
 end

@@ -1,4 +1,4 @@
-module JsonSchemaSpec
+module JsonSchema
   class Result
     attr_accessor :contexts, :errors
 
