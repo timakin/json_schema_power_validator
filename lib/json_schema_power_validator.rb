@@ -23,10 +23,14 @@ module JsonSchema
     def get_result
       @results = Result.new
       @suites["examples"].each do |suite|
-        validation_response = @schema.validate!(suite)
+        validation_response = @schema.validate!(suite["values"])
         @results.contexts.push(validation_response)
         if validation_response == "error" # TODO
-          @results.errors.push(validation_response)
+          if suite["expect"] == "invalid"
+            @results.contexts.push(validation_response)
+          else
+            @results.errors.push(validation_response)
+          end
         end
       end
 
