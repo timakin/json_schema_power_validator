@@ -1,8 +1,8 @@
 # JsonSchema::PowerValidator
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/json_schema_power_validator`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Test JSON Schema itself with contexts.
+After preparation of schema and test suite, you can test schema response.
+It'll display each results with json format.
 
 ## Installation
 
@@ -22,61 +22,37 @@ Or install it yourself as:
 
 ## Usage
 
-```json
-{
-	"id": "https://github.com/timakin/json_schema_power_validator/schema/sample.json",
-	"$schema": "http://json-schema.org/draft-04/schema#",
-	"description": "Test schema for example",
-	"definitions": {
-		"positiveInt": {
-			"type": "integer",
-			"minimum": 0
-		},
-		"name": {
-			"type": "string",
-			"minimumLength": 4,
-			"maximumLength": 12
-		}
-	},
-	"type": "object",
-	"properties": {
-		"id": {
-			"$ref": "#/definitions/positiveInt"
-		},
-		"username": {
-			"$ref": "#/definitions/name"
-		}
-	}
-}
-```
+Prepare json schema you'd like to test and test suite.
+A test suite must be written on the fixed format.
+The suite must include parameters:
+
+- examples 			- Array of test cases, and each of them should include following parameters
+	- context 		- Title of each test
+	- description - Detail of the test
+	- values 			- Parameters that'll be used as test values.
+
+The below json is the example of test suite on the above format.
 
 ```json
 {
-	"id": "https://github.com/timakin/json_schema_power_validator/schema/suite/sample.json",
-	"description": "Schema PowerValidator for example.json",
 	"examples": [
 		{
 			"context": "Success",
 			"description": "Success Case",
 			"expect": "valid",
 			"values": {
-				"id": 1,
-				"username": "timakin"
+				  "id": 1234,
+				  "name": "timakin",
+				  ...
 			}
 		},
 		{ ... },
-		{
-			"context": "Fail",
-			"description": "fail",
-			"expect": "valid",
-			"values": {
-				"id": -100,
-				"username": "tim"
-			}
-		}
+		{ ... }
 	]
 }
 ```
+
+With the suite, you can get a detail error message, and check whether the results are all clear or not.
 
 ```ruby
 require 'json_schema_power_validator'
@@ -90,11 +66,11 @@ validated_schema.get_result
 #			"description": "Success Case",
 #			"result": "success"
 #		},
-#		{ ... }
-#		{
+#		{ ... },
+#   {
 #			"context": "Fail",
-#			"description": "fail"
-#			"reason": "Invalid parameter: id should satisfy the condition minimumLength"
+#			"description": "Failed Case",
+#			"result": "The property '#/id' did not have a minimum value of 0, inclusively"
 #		}
 #	]
 #}
