@@ -94,7 +94,6 @@ validated_schema.get_result
 #		{
 #			"context": "Fail",
 #			"description": "fail"
-#			"result": "fail",
 #			"reason": "Invalid parameter: id should satisfy the condition minimumLength"
 #		}
 #	]
