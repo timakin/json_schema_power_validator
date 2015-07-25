@@ -25,7 +25,7 @@ module JsonSchema
       @suites["examples"].each do |suite|
         begin
           JSON::Validator.validate!(@schema, suite["values"])
-          suite["expect"] == "valid" ? @raw_results.push("Success") : "A validation passed, but it opposites the expectation."
+          suite["expect"] == "valid" ? @raw_results.push("Success") : @raw_results.push("A validation passed, but it opposites the expectation.")
         rescue JSON::Schema::ValidationError
           suite["expect"] == "invalid" ? @raw_results.push("Success") : @raw_results.push($!.message)
         end

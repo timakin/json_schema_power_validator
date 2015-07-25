@@ -6,6 +6,7 @@ require 'json_schema_power_validator/version'
 Gem::Specification.new do |spec|
   spec.name          = "json_schema_power_validator"
   spec.version       = JsonSchema::VERSION
+  spec.licenses      = ["MIT"]
   spec.authors       = ["timakin"]
   spec.email         = ["timaki.st@gmail.com"]
 
