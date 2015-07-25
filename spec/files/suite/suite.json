@@ -1,0 +1,46 @@
+{
+  "id": "https://github.com/timakin/json_schema_power_validator",
+  "description": "Schema PowerValidator for example.json",
+  "examples": [
+    {
+      "context": "Success",
+      "description": "Valid JSON",
+      "expect": "valid",
+      "values": {
+        "firstName": "firstname",
+        "lastName": "lastname",
+        "age": 100
+      }
+    },
+    {
+      "context": "Success",
+      "description": "Invalid JSON",
+      "expect": "valid",
+      "values": {
+        "firstName": "firstname",
+        "lastName": "lastname",
+        "age": "abc"
+      }
+    },
+    {
+      "context": "Failure",
+      "description": "Invalid JSON",
+      "expect": "invalid",
+      "values": {
+        "firstName": "firstname",
+        "lastName": "lastname",
+        "age": "abc"
+      }
+    },
+    {
+      "context": "Failure",
+      "description": "Valid JSON",
+      "expect": "invalid",
+      "values": {
+        "firstName": "firstname",
+        "lastName": "lastname",
+        "age": 10
+      }
+    }
+  ]
+}
