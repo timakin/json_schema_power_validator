@@ -1,52 +1,47 @@
 require "json_schema_power_validator/version"
-require "json_schema_power_validator/result"
+require "json-schema"
 
 module JsonSchema
-
-  # PPP
-  # 1. parse json data
-  # 2. compare suite/$schema and schema
-  # 3. get a detail result with each test cases
-    # 3.1. if all of them are clear, return true
-    # 3.2. if some of them failed, return detail error description
-  # 4. ok? will just return true/false depending on results
-
   class PowerValidator
-    def initialize(schema_file)
-      @schema = JsonSchema.parse!(JSON.parse(File.read(schema_file)))
-    end
-
-    def set_suite(suite_file)
-      @suite = JSON.parse(File.read(suite_file))
+    def initialize(schema, suite)
+      @schema = JSON.parse(File.read(schema))
+      @suites = JSON.parse(File.read(suite))
+      @raw_results ||= []
+      @result_json ||= []
+      @results = validate
     end
 
     def get_result
-      @results = Result.new
-      @suites["examples"].each do |suite|
-        validation_response = @schema.validate!(suite["values"])
-        @results.contexts.push(validation_response)
-        if validation_response == "error" # TODO
-          if suite["expect"] == "invalid"
-            @results.contexts.push(validation_response)
-          else
-            @results.errors.push(validation_response)
-          end
-        end
-      end
-
-      self.trim_result_json(@results)
-      @results.errors.empty? ? "Success" : compared_results.errors # TODO: return error json
+      JSON.pretty_generate(@results)
     end
 
     def ok?
-      @results.errors.empty? ? true : false
-      # return true/false depending on the test result
+      @raw_results.all? { |result| result == "Success" }
     end
 
     private
 
-    def trim_result_json(results)
-      # trim result data to pretty json
+    def validate
+      @suites["examples"].each do |suite|
+        begin
+          JSON::Validator.validate!(@schema, suite["values"])
+          @raw_results.push("Success") 
+        rescue JSON::Schema::ValidationError
+          suite["expect"] == "invalid" ? @raw_results.push("Success") : @raw_results.push($!.message)
+        end
+      end
+      get_result_by_json
+    end
+
+    def get_result_by_json
+      @raw_results.each_with_index { |result, index| 
+        @result_json << {
+          context:     @suites["examples"][index]["context"],
+          description: @suites["examples"][index]["description"],
+          result:      result
+        }
+      }
+      {results: @result_json}
     end
   end
 end

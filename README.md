@@ -98,9 +98,7 @@ Or install it yourself as:
 ```ruby
 require 'json_schema_power_validator'
 
-schema = JsonSchema::PowerValidator.new("schema/sample.json")
-schema.set_suite("schema/suite/sample.json")
-schema.get_result
+validated_schema = JsonSchema::PowerValidator.new("schema/sample.json", "schema/suite/sample.json")
 #{
 #	"results": [
 #		{
@@ -108,15 +106,7 @@ schema.get_result
 #			"description": "Success Case",
 #			"result": "success"
 #		},
-#		{
-#			"context": "Invalid",
-#			"description": "Invalid id",
-#			"result": "success"
-#		}
-#			"context": "Invalid",
-#			"description": "Invalid username",
-#			"result": "success"
-#		},
+#		{ ... }
 #		{
 #			"context": "Fail",
 #			"description": "fail"
@@ -126,8 +116,11 @@ schema.get_result
 #	]
 #}
 
+validated_schema.get_result
 
-schema.ok?
+
+
+validated_schema.ok?
 # false
 ```
 
