@@ -1,4 +1,5 @@
 require "json_schema_power_validator/version"
+require "json_schema_power_validator/errors/parse_suite_error"
 require "json-schema"
 
 module JsonSchema
@@ -22,6 +23,8 @@ module JsonSchema
     private
 
     def validate
+      verify_suite_parameters
+
       @suites["examples"].each do |suite|
         begin
           JSON::Validator.validate!(@schema, suite["values"])
@@ -30,7 +33,22 @@ module JsonSchema
           suite["expect"] == "invalid" ? @raw_results.push("Success") : @raw_results.push($!.message)
         end
       end
+
       get_result_by_json
+    end
+
+    def verify_suite_parameters
+      unless @suites["examples"]
+        raise ParseSuiteError.new("examples for a test suite is undefined, or format is invalid.")
+      end
+      
+      @suites["examples"].each do |suite|
+        ["context", "description", "expect", "values"].each do |param|
+          if suite[param].nil?
+            raise ParseSuiteError.new("#{param} for a test suite is undefined.")
+          end          
+        end
+      end
     end
 
     def get_result_by_json
