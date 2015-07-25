@@ -68,7 +68,7 @@ validated_schema.get_result
 #			"result": "success"
 #		},
 #		{ ... },
-#   {
+#		{
 #			"context": "Fail",
 #			"description": "Failed Case",
 #			"result": "The property '#/id' did not have a minimum value of 0, inclusively"
