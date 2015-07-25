@@ -29,6 +29,7 @@ The suite must include parameters:
 - examples 			- Array of test cases, and each of them should include following parameters
 	- context 		- Title of each test
 	- description - Detail of the test
+	- expect			- Expectation of a result of test (it must be "valid"/"invalid")
 	- values 			- Parameters that'll be used as test values.
 
 The below json is the example of test suite on the above format.
