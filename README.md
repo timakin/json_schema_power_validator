@@ -1,4 +1,4 @@
-# JsonSchemaPowerValidator
+# JsonSchema::PowerValidator
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/json_schema_power_validator`. To experiment with that code, run `bin/console` for an interactive prompt.
 
@@ -64,24 +64,7 @@ Or install it yourself as:
 				"username": "timakin"
 			}
 		},
-		{
-			"context": "Invalid",
-			"description": "Invalid id",
-			"expect": "invalid",
-			"values": {
-				"id": -1,
-				"username": "timakin"
-			}
-		},
-		{
-			"context": "Invalid",
-			"description": "Invalid username",
-			"expect": "invalid",
-			"values": {
-				"id": 1,
-				"username": "tim"
-			}
-		},
+		{ ... },
 		{
 			"context": "Fail",
 			"description": "fail",
@@ -99,6 +82,7 @@ Or install it yourself as:
 require 'json_schema_power_validator'
 
 validated_schema = JsonSchema::PowerValidator.new("schema/sample.json", "schema/suite/sample.json")
+validated_schema.get_result
 #{
 #	"results": [
 #		{
@@ -116,10 +100,6 @@ validated_schema = JsonSchema::PowerValidator.new("schema/sample.json", "schema/
 #	]
 #}
 
-validated_schema.get_result
-
-
-
 validated_schema.ok?
 # false
 ```
@@ -132,7 +112,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/json_schema_power_validator/fork )
+1. Fork it ( https://github.com/timakin/json_schema_power_validator/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
