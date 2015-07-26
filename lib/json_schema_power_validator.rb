@@ -17,7 +17,7 @@ module JsonSchema
     end
 
     def ok?
-      @raw_results.all? { |result| result == "Success" }
+      @raw_results.all? { |result| result == success }
     end
 
     private
@@ -28,9 +28,9 @@ module JsonSchema
       @suites["examples"].each do |suite|
         begin
           JSON::Validator.validate!(@schema, suite["values"])
-          suite["expect"] == "valid" ? @raw_results.push("Success") : @raw_results.push("A validation passed, but it opposites the expectation.")
+          verify_result_and_expectation(suite, valid, valid_but_unexpected_error)
         rescue JSON::Schema::ValidationError
-          suite["expect"] == "invalid" ? @raw_results.push("Success") : @raw_results.push($!.message)
+          verify_result_and_expectation(suite, invalid, $!.message)
         end
       end
 
@@ -38,15 +38,11 @@ module JsonSchema
     end
 
     def verify_suite_parameters
-      unless @suites["examples"]
-        raise ParseSuiteError.new("examples for a test suite is undefined, or format is invalid.")
-      end
+      raise ParseSuiteError.new(example_is_undefined_error) unless @suites["examples"]
       
       @suites["examples"].each do |suite|
-        ["context", "description", "expect", "values"].each do |param|
-          if suite[param].nil?
-            raise ParseSuiteError.new("#{param} for a test suite is undefined.")
-          end          
+        suite_params.each do |param|          
+          raise ParseSuiteError.new(test_suite_is_undefined_error) unless suite[param]
         end
       end
     end
@@ -60,6 +56,40 @@ module JsonSchema
         }
       }
       {results: @result_json}
+    end
+
+    def verify_result_and_expectation(suite, expectation, error_message)
+      suite["expect"] == expectation ? @raw_results.push(success) : @raw_results.push(error_message)
+    end
+
+    def test_suite_is_undefined_error(param)
+      "#{param} for a test suite is undefined."
+    end
+
+    # Constants
+
+    def success
+      "Success"
+    end
+
+    def suite_params
+      ["context", "description", "expect", "values"]
+    end
+
+    def valid
+      "valid"
+    end
+
+    def invalid
+      "invalid"
+    end
+    
+    def valid_but_unexpected_error
+      "A validation passed, but it opposites the expectation."
+    end
+
+    def example_is_undefined_error
+      "examples for a test suite is undefined, or format is invalid."
     end
   end
 end
