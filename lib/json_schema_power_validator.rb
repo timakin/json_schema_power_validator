@@ -42,7 +42,7 @@ module JsonSchema
       
       @suites["examples"].each do |suite|
         suite_params.each do |param|          
-          raise ParseSuiteError.new(test_suite_is_undefined_error) unless suite[param]
+          raise ParseSuiteError.new(test_suite_is_undefined_error(param)) unless suite[param]
         end
       end
     end
